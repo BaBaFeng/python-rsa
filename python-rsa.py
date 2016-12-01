@@ -37,25 +37,29 @@ class pyrsa(object):
         q = self.q
         p = self.p
 
-        prime_list = self.range_prime(100, 1000)
+        prime_list = self.range_prime(11, 1000)
         N = p * q
         T = (p - 1) * (q - 1)
 
         e1 = 0
         for pri in prime_list:
-            if pri < T and T % pri:
+            if pri < T and T % pri != 0:
                 e1 = pri
                 break
         else:
             raise Exception("e1 not found.")
 
+        x = 0
         e2 = 0
-        for n in range(2, T):
-            if(e1 * n) % T == 1:
-                e2 = n
+        while x < T // e1:
+            if (T * x + 1) % e1 == 0:
+                e2 = (T * x + 1) // e1
                 break
+            x += 1
         else:
             raise Exception("e2 not found")
+
+        print("e2:", e2)
 
         return (N, e1), (N, e2)
 
