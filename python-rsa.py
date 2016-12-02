@@ -68,7 +68,7 @@ class pyrsa(object):
             加解密m（解密时只是m换成了密文）
         """
         N, e = key
-        return (m ** e) % N
+        return pow(m, e, N)
 
     def get_bits(self):
         bit = len(bin(self.q * self.p)) - 2
